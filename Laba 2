@@ -1,0 +1,33 @@
+import matplotlib.pyplot as plt
+
+x_result = []
+y_result = []
+min_x = 0.0
+max_x = 0.0
+min_y = 0.0
+max_y = 0.0
+
+with open("C:/Users/User/Desktop/new.txt", 'r') as start:
+    st = list(start.readlines())
+    for i in range(len(st)):
+        t = list(map(float, st[i].split()))
+        if i % 2 == 0:
+            x_result.append(t)
+            if max(t) > max_x:
+                max_x = max(t)
+            if min(t) < min_x:
+                min_x = min(t)
+        else:
+            y_result.append(t)
+            if max(t) > max_y:
+                max_y = max(t)
+            if min(t) < min_y:
+                min_y = min(t)
+
+plt.figure()
+for i in range(len(x_result)):
+    plt.subplot(3, 2, i + 1)
+    plt.plot(x_result[i], y_result[i])
+    plt.axis([min_x, max_x, min_y, max_y])
+    plt.grid()
+plt.show()
