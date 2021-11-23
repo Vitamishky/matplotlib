@@ -1,0 +1,98 @@
+import matplotlib.pyplot as plt
+import csv
+
+def analysis(your_list, your_dict):
+    for i in your_list:
+        if i in your_dict:
+            your_dict[i] += 1
+        else:
+            your_dict[i] = 1
+
+mas = []
+with open("C:/Users/User/Desktop/students.csv", 'r') as start:
+    reader = csv.reader(start)
+    for i in reader:
+        mas.append(list(map(str, i[0].split(';'))))
+
+prep = []
+groups = []
+grades = []
+grades_for_prep = [[],[],[],[],[],[],[]]
+grades_for_groups = [[],[],[],[],[],[]]
+
+for i in range(len(mas)):
+    prep.append(mas[i][0])
+    groups.append(int(mas[i][1]))
+    grades.append(int(mas[i][2]))
+    if mas[i][0] == "prep1":
+        grades_for_prep[0].append(int(mas[i][2]))
+    if mas[i][0] == "prep2":
+        grades_for_prep[1].append(int(mas[i][2]))
+    if mas[i][0] == "prep3":
+        grades_for_prep[2].append(int(mas[i][2]))
+    if mas[i][0] == "prep4":
+        grades_for_prep[3].append(int(mas[i][2]))
+    if mas[i][0] == "prep5":
+        grades_for_prep[4].append(int(mas[i][2]))
+    if mas[i][0] == "prep6":
+        grades_for_prep[5].append(int(mas[i][2]))
+    if mas[i][0] == "prep7":
+        grades_for_prep[6].append(int(mas[i][2]))
+    if mas[i][1] == '751':
+        grades_for_groups[0].append(int(mas[i][2]))
+    if mas[i][1] == '752':
+        grades_for_groups[1].append(int(mas[i][2]))
+    if mas[i][1] == '753':
+        grades_for_groups[2].append(int(mas[i][2]))
+    if mas[i][1] == '754':
+        grades_for_groups[3].append(int(mas[i][2]))
+    if mas[i][1] == '755':
+        grades_for_groups[4].append(int(mas[i][2]))
+    if mas[i][1] == '756':
+        grades_for_groups[5].append(int(mas[i][2]))
+
+data = {}
+for i in range(7):
+    data[str(i)] = grades_for_prep[i]
+key = list(data.keys())
+
+plt.figure()
+for i in range(len(data)):
+    plt.title(i)
+    lab = sorted(data.get(key[i]))
+    labels = sorted(list(set(lab)))
+    print(labels)
+    dct = {}
+    analysis(lab, dct)
+    result = [v for v in dct.values()]
+    print(result)
+    plt.subplot(4, 2, i + 1)
+    plt.pie(result, labels = labels)
+    plt.axis('equal')
+    plt.legend()
+plt.text(0, 10, "Grades for prep")
+plt.show()
+
+data = {}
+for i in range(6):
+    data[str(i)] = grades_for_groups[i]
+key = list(data.keys())
+
+plt.figure()
+
+for i in range(len(data)):
+    number = i + 750
+    plt.title(number)
+    lab = sorted(data.get(key[i]))
+    labels = sorted(list(set(lab)))
+    print(labels)
+    dct = {}
+    analysis(lab, dct)
+    result = [v for v in dct.values()]
+    print(result)
+    plt.subplot(3, 2, i + 1)
+    plt.pie(result, labels = labels)
+    plt.axis('equal')
+    plt.legend()
+plt.text(-5, 7, "Grades for group")
+plt.show()
